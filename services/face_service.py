@@ -30,7 +30,7 @@ def get_analyzer():
                 logger.info("Face model loaded :3")
     return analyzer
 
-def detect_face(image: np.ndarray)-> DetectedFace:
+def detect_face(image: np.ndarray)-> DetectedFace | None:
     analyzer3 = get_analyzer()
     faces = analyzer3.detect_faces(image)
     if not faces:
