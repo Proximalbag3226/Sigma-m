@@ -47,8 +47,6 @@ def similarity(face_a, face_b)-> float:
     a = np.asarray(face_a, dtype=np.float32)
     b = np.asarray(face_b, dtype=np.float32)
     denominator = np.linalg.norm(a) - np.linalg.norm(b)
-    if denominator == 0:
-        return 0.0
     return float(np.dot(a,b) / denominator)
 
 def is_matching(similarity: float, threshold:float | None = None)-> bool:

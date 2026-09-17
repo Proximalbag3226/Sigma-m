@@ -7,3 +7,6 @@ class PlateReadRequest(BaseModel):
     confidence: float | None = None
     bounding_box: Box | None = None
 
+class PlateReadResponse(BaseModel):
+    plate_detected: bool
+    plate_text: str | None = None
