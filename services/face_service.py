@@ -19,12 +19,12 @@ def get_analyzer():
     if analyzer is None:
         with analyzer_lock:
             if analyzer is None:
-                from insightface import FaceAnalysis
+                from insightface.app import FaceAnalysis
 
                 settings = get_settings()
                 logger.info("Charging face model '%s'...", settings.face_model)
                 analyzer2 = FaceAnalysis(name = settings.face_model, providers = ["CPUExecutionProvider"])
-                analyzer2.prepare(ctx=-1, detection_size=(settings.face_size, settings.face_size))
+                analyzer2.prepare(ctx_id=-1, det_size=(settings.face_size, settings.face_size))
                 analyzer = analyzer2
 
                 logger.info("Face model loaded :3")
@@ -32,7 +32,7 @@ def get_analyzer():
 
 def detect_face(image: np.ndarray)-> DetectedFace | None:
     analyzer3 = get_analyzer()
-    faces = analyzer3.detect_faces(image)
+    faces = analyzer3.get(image)
     if not faces:
         return None
 

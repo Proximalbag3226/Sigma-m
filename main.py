@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 settings = config.get_settings()
 
 class BodySizeLimit(BaseHTTPMiddleware):
-    def __init__(self, app2, max_bytes: int)->None:
-        super().__init__(app2)
+    def __init__(self, app, max_bytes: int)->None:
+        super().__init__(app)
         self.max_bytes = max_bytes
 
     async def dispatch(self, request: Request, call_next):
@@ -22,9 +22,9 @@ class BodySizeLimit(BaseHTTPMiddleware):
             return JSONResponse(status_code=status.HTTP_413_CONTENT_TOO_LARGE, content={"detail": "Body too large"})
         return await call_next(request)
 
-app = FastAPI(title=Settings.service_name, version="0.0.1", docs_url="/docs" if settings.environment != "production" else None, redoc_url=None)
+app = FastAPI(title=settings.service_name, version="0.0.1", docs_url="/docs" if settings.environment != "production" else None, redoc_url=None)
 
-app.add_middleware(BodySizeLimit, max_bytes = Settings.max_upload + 1024)
+app.add_middleware(BodySizeLimit, max_bytes = settings.max_upload + 1024)
 
 app.include_router(document.router)
 app.include_router(face.router)
