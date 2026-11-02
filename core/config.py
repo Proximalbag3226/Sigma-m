@@ -11,9 +11,9 @@ class Settings(BaseSettings):
     api_key: str = "Clave_asi_super_secreta_cambiar_en_producción"
 
     max_upload: int = 8 * 1024 * 1024
-    allowed_content_types: tuple[str,...] = ("image/jpg", "image/png")
+    allowed_content_types: tuple[str,...] = ("image/jpg", "image/png", "image/jpeg")
 
-    face_model: str = "buffalo_1"
+    face_model: str = "buffalo_l"
     face_size: int = 640
 
     face_match: float = 0.48

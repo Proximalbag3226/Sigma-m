@@ -27,7 +27,7 @@ def run_ocr(image: np.ndarray) -> tuple[str, float]:
             continue
         key = (data["block_num"][1], data["par_num"][1], data["line_num"][1])
         lines.setdefault(key, []).append(word)
-        conf = data["config"][1]
+        conf = data["conf"][i]
         if conf not in ("-1", -1):
             confidences.append(float(conf))
 
@@ -63,7 +63,7 @@ def extract_id_document(image: np.ndarray) -> dict:
         "birth_date" : date_match.group(0) if date_match else None,
         "raw_text_confidence" : confidence,
         "photo_face_detected" : face is not None,
-        "photo_face_embeding" : face.embedding.tolist() if face else None,
+        "photo_face_embedding" : face.embedding.tolist() if face else None,
         "photo_bounding_box" : ({"x1" : face.box2[0], "y1" : face.box2[1], "x2" : face.box2[2], "y2" : face.box2[3]}) if face else None
     }
 
